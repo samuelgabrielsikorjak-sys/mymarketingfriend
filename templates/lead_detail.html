@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+                <p>{{lead.name }}</p>
+                <p>{{lead.company}}</p>
+                <p>{{lead.web_site_url}}</p>
+                <p>{{lead.sector}}</p>
+                <p>{{lead.notes}}</p>
+                <p>{{lead.score_reasoning}}</p>
+                <p>{{lead.score}}</p>
+                <td><a href="/leads/{{ lead.id }}/edit">Edit</a></td>
+{% endblock %}

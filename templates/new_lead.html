@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" action="/leads/new">
+    <label>
+        <input name="name" placeholder="John Miller">
+    </label>
+    <label>
+        <input name="company" placeholder="techscope">
+    </label>
+    <label>
+        <input name="web_site_url" placeholder="www.company.com">
+    </label>
+    <label>
+        <input name="sector" placeholder="Technology">
+    </label>
+    <label>
+        <textarea name="notes" placeholder="Company strugles with sales..."></textarea>
+    </label>
+    <button type="submit">Submit lead</button>
+</form>
+{% endblock%}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Company</th>
+            <th>Website</th>
+            <th>Sector</th>
+            <th>Notes</th>
+            <th>Score reasoning</th>
+            <th>Score</th>
+            <th>Actions</th>
+        </tr>   
+            {% for lead in leads %}
+            <tr>
+                <td><a href="/leads/{{lead.id}}">{{lead.name }}</a></td>
+                <td>{{lead.company}}</td>
+                <td>{{lead.web_site_url}}</td>
+                <td>{{lead.sector}}</td>
+                <td>{{lead.notes}}</td>
+                <td>{{lead.score_reasoning}}</td>
+                <td>{{lead.score}}</td>
+                <td><a href="/leads/{{ lead.id }}/edit">✏️</a></td>
+                <td>
+                <form method="post" action="/leads/{{ lead.id }}/delete">
+                    <button type="submit">🗑️</button>
+                </form>
+                </td>
+            </tr>
+            {% endfor %}
+    </table>
+{% endblock %}

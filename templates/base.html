@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="/static/style.css">
+        <title>{% block title %}B2B Lead Manager{% endblock %}</title>
+        {% block head %}{% endblock %}
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="nav">
+                <a class="brand" href="/">Lead Manager</a>
+                <ul class="nav-links">
+                    <li><a href="/leads">Leads</a></li>
+                    <li><a href="/leads/new">Add Lead</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <main id="content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <footer class="site-footer">
+            <p>&copy; {{ current_year|default(2026) }} B2B Lead Manager</p>
+        </footer>
+
+        {% block scripts %}{% endblock %}
+    </body>
+</html>

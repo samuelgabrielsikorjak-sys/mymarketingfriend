@@ -1,0 +1,87 @@
+1. Josh Braun — 4T Framework
+Subject: [specific trigger, e.g. "your post on X" / "saw you just launched Y"]
+Hey [First Name],
+[TRIGGER — one line naming something specific and recent about them: a post, a hire, a launch, a comment.]
+[THINK — one line that reframes a problem they likely have, phrased as an observation, not an accusation. e.g. "Most teams doing X end up stuck on Y."]
+[THIRD-PARTY CREDIBILITY — one line, a peer result, not your own claim. e.g. "We helped [similar company] fix that in [timeframe] — [specific outcome]."]
+[TALK — one low-friction ask. e.g. "Worth a 10-min look?" / "Want me to send the 2-min version?"]
+[Your name]
+
+2. Jason Bay — REPLY Method (relevance-first)
+Subject: [reference to the specific trigger event]
+Hi [First Name],
+[Relevance line — the concrete business reason you're reaching out now: a trigger event, role change, funding, hiring spree, public initiative. Must be true and specific, not generic flattery.]
+[One sentence connecting that trigger to a problem your offer solves — stated as their likely reality, not a pitch.]
+[Optional: one-line proof point, only if you have a directly comparable example.]
+[Ask — binary and easy: "Open to a quick chat this week?" or "Mind if I send more info?"]
+[Your name]
+
+3. Will Allred / Lavender — Above the Line
+Everything that matters must fit in what the recipient reads before deciding to bail — usually the first 1–2 lines on mobile. Write the email backward: draft the ask first, then the proof, then trim the opener until only the sharpest hook survives.
+Subject: [4–6 words max, no hype]
+[Line 1 — sharpest possible hook. Must earn the next line. No "I hope this finds you well," no company backstory.]
+[Line 2 — the one thing that matters: their problem or your proof, whichever is stronger.]
+[Optional line 3 — brief context, only if line 1–2 didn't already answer "why me, why now."]
+[Ask — one sentence, one action.]
+[Your name]
+
+4. Sujan Patel / Mailshake — Data-Backed Short Template
+Subject: [Question or curiosity-driven, under 6 words]
+Hi [First Name],
+[One sentence: the specific outcome or number relevant to their situation. e.g. "Companies like yours are seeing [X%] improvement in [metric] by doing [specific thing]."]
+[One sentence: why you're mentioning it to them specifically — tie to something on their site/profile/role.]
+[CTA — soft, e.g. "Worth exploring? Happy to send the data."]
+[Your name]
+P.S. [optional low-pressure add-on, e.g. a resource link or one extra proof point]
+
+5. Dmitry Dragilev — PR-Style Pitch (for journalists, bloggers, or any gatekeeper who's pitched constantly)
+Subject: [Specific angle tied to something they recently covered/published]
+Hi [First Name],
+[Reference the specific piece they wrote/covered — prove you actually read it, one sentence.]
+[Bridge — one sentence connecting their past coverage to why your thing is relevant to their audience, not to you.]
+[The offer — what you're giving them, stated plainly: an exclusive, data, an expert quote, access. Not "check out my product."]
+[Easy yes/no ask — e.g. "Want me to send the one-pager?"]
+[Your name]
+
+6. Belkins-Style — Case-Study-Led
+Subject: [Result-driven, e.g. "[X%] increase for a company like yours"]
+Hi [First Name],
+[One sentence: name a comparable company/peer and the specific result you got them — numbers if you have them.]
+[One sentence: the specific pain point that result solved, framed so the reader self-identifies.]
+[One sentence: bridge to why you think the same applies to them — must reference something true about their company.]
+[Ask — e.g. "Want the short case study, or would a 15-min call be more useful?"]
+[Your name]
+
+7. Katelyn Bourgoin / Lincoln Murphy — Social Proof / Borrowed Credibility
+Subject: [Peer company name] + [result], e.g. "How [Peer Co] solved [problem]"
+Hi [First Name],
+[Open directly with the peer's story — one to two sentences. Let the reader see themselves in it before you mention your own offer at all.]
+[One sentence: the mechanism — what actually changed, not just the outcome.]
+[One sentence: why you think [First Name]'s company is in a similar spot — must be specific, based on something real (their market, their recent move, their scale).]
+[Ask — low-friction, curiosity-based. e.g. "Want me to walk you through how they did it?"]
+[Your name]
+
+8. Alex Berman-Style — Direct/Punchy Outreach
+Subject: [Blunt, benefit-forward, under 6 words]
+[First Name] —
+[One sentence: the specific result you can get them, stated plainly and confidently. No hedging.]
+[One sentence: brief proof — a number, a name, a timeframe.]
+[Ask — direct: "Want me to show you how?" or "15 min this week?"]
+[Your name]
+Note: this style leans aggressive/confident — works best with a strong, quantifiable proof point behind it. Weak without real numbers to back the confidence.
+
+9. Current-Benchmark Template (2026 personalization standard)
+Subject: [reference the one specific fact you found]
+Hi [First Name],
+[The ONE specific, verifiable fact about them that proves you did real research — a recent article, a product launch, a job change, a specific number from their business. Not "I love your work."]
+[One sentence connecting that fact to a real problem or opportunity, stated as an observation.]
+[One sentence: what you do, stated in terms of the outcome, not the feature. Max 15 words.]
+[One low-friction ask.]
+[Your name]
+
+Fill-in-the-blank cheat sheet (use across any template above)
+[Trigger fact]: the single most recent, specific, true thing about them you can find
+[Peer proof]: a named comparable company + a real number or outcome (only use if true)
+[Problem reframe]: their likely pain, stated as an observation, not a diagnosis
+[Ask]: always one sentence, always binary/easy to say yes to
+Length target: 50–150 words total, always

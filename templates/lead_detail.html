@@ -1,5 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
+    <form method="post" action="/leads/{{ lead.id }}/generate">
+        <button type="submit">Generate cold emails</button>
+    </form>
+    {% if script_1 %}
+<div>
+    <h3>{{ script_1.name }}</h3>
+    <textarea readonly>{{ script_1.email }}</textarea>
+    <form method="post" action="/leads/{{ lead.id }}/save_email">
+        <input type="hidden" name="chosen_name" value="{{ script_1.name }}">
+        <input type="hidden" name="chosen_email" value="{{ script_1.email }}">
+        <button type="submit">Use this one</button>
+    </form>
+</div>
+
+<div>
+    <h3>{{ script_2.name }}</h3>
+    <textarea readonly>{{ script_2.email }}</textarea>
+    <form method="post" action="/leads/{{ lead.id }}/save_email">
+        <input type="hidden" name="chosen_name" value="{{ script_2.name }}">
+        <input type="hidden" name="chosen_email" value="{{ script_2.email }}">
+        <button type="submit">Use this one</button>
+    </form>
+</div>
+{% endif %}
                 <p>{{lead.name }}</p>
                 <p>{{lead.company}}</p>
                 <p>{{lead.web_site_url}}</p>
@@ -7,5 +31,9 @@
                 <p>{{lead.notes}}</p>
                 <p>{{lead.score_reasoning}}</p>
                 <p>{{lead.score}}</p>
+                <p>{{lead.status}}</p>
+                <p>{{lead.contact}}</p>
+                <p>{{lead.chosen_script}}</p>
+                <p>{{lead.mail}}</p>
                 <td><a href="/leads/{{ lead.id }}/edit">Edit</a></td>
 {% endblock %}

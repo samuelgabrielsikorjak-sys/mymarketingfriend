@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
+    <form method = "post" action ="/leads/evaluate">
+        <button type="submit">Evaluate all</button>
+    </form>
     <table>
         <tr>
             <th>Name</th>
@@ -7,7 +10,6 @@
             <th>Website</th>
             <th>Sector</th>
             <th>Notes</th>
-            <th>Score reasoning</th>
             <th>Score</th>
             <th>Actions</th>
         </tr>   
@@ -18,7 +20,6 @@
                 <td>{{lead.web_site_url}}</td>
                 <td>{{lead.sector}}</td>
                 <td>{{lead.notes}}</td>
-                <td>{{lead.score_reasoning}}</td>
                 <td>{{lead.score}}</td>
                 <td><a href="/leads/{{ lead.id }}/edit">✏️</a></td>
                 <td>

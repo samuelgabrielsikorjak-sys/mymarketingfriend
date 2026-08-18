@@ -1,20 +1,52 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="post" action="/leads/new">
+<form method="post" action="/leads/{{ lead.id }}/edit">
     <label>
-        <input name="name" value = "{{lead.name}}">
+        <input name="name" value="{{lead.name}}" placeholder="John Miller">
     </label>
     <label>
-        <input name="company" value = "{{lead.company}}">
+        <input name="company" value="{{lead.company}}" placeholder="techscope">
     </label>
     <label>
-        <input name="web_site_url" value = "{{lead.web_site_url}}">
+        <input name="web_site_url" value="{{lead.web_site_url}}" pattern="^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}.*$" type="text" placeholder="www.company.com">
     </label>
     <label>
-        <input name="sector" value = "{{lead.sector}}">
+        <input name="sector" value="{{lead.sector}}" placeholder="Technology">
     </label>
     <label>
-        <textarea name="notes">{{ lead.notes }}</textarea>
+        <select name="status">
+            <option value="new" 
+            {% if lead.status == "new" %}
+                selected
+            {% endif %}>New</option>
+            <option value="contacted" 
+            {% if lead.status == "contacted" %}
+                selected
+            {% endif %}>Contacted</option>
+            <option value="follow_up_1"
+            {% if lead.status == "follow_up_1" %}
+                selected
+            {% endif %}>Follow Up 1</option>
+            <option value="follow_up_2"
+            {% if lead.status =="follow_up_2" %}
+                selected
+            {% endif %}>Follow Up 2</option>
+            <option value="responded"{% if lead.status == "responded"%}
+                selected
+            {% endif %}>Responded</option>
+            <option value="not_responded"{% if lead.status == "not_responded"%}
+                selected
+            {% endif %}>Not Responded</option>
+            <option value="won"{% if lead.status == "won"%}
+                selected
+            {% endif %}>Won</option>
+        </select>
+    </label>
+    <label>
+        <input name="contact" value="{{lead.contact}}" type="email" placeholder="email">
+    </label>
+    <label>
+        <textarea name="notes" placeholder="Company strugles with sales...">{{lead.notes}}</textarea>
     </label>
     <button type="submit">Submit lead</button>
 </form>

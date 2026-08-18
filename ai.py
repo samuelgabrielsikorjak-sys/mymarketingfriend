@@ -65,7 +65,6 @@ def generate_copy(name, company, sector, notes, score_reasoning, web_site_url):
             raw_text = raw_text[4:]
     raw_text = raw_text.strip()
     print("CLEANED:", raw_text)
-    print("RAW RESPONSE:", raw_text)
-     
+    
     data = json.loads(raw_text)
     return data["script_1"], data["script_2"]

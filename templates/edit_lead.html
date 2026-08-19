@@ -1,50 +1,40 @@
 {% extends "base.html" %}
 {% block content %}
+<h1>Edit lead</h1>
 <form method="post" action="/leads/{{ lead.id }}/edit">
+    <h5 style="margin-bottom: 5px">Name</h5>
     <label>
         <input name="name" value="{{lead.name}}" placeholder="John Miller">
     </label>
+    <h5 style="margin-bottom: 5px">Company</h5>
     <label>
         <input name="company" value="{{lead.company}}" placeholder="techscope">
     </label>
+    <h5 style="margin-bottom: 5px">Website</h5>
     <label>
         <input name="web_site_url" value="{{lead.web_site_url}}" pattern="^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}.*$" type="text" placeholder="www.company.com">
     </label>
+    <h5 style="margin-bottom: 5px">Sector</h5>
     <label>
         <input name="sector" value="{{lead.sector}}" placeholder="Technology">
     </label>
+    <h5 style="margin-bottom: 5px">Status</h5>
     <label>
-        <select name="status">
-            <option value="new" 
-            {% if lead.status == "new" %}
-                selected
-            {% endif %}>New</option>
-            <option value="contacted" 
-            {% if lead.status == "contacted" %}
-                selected
-            {% endif %}>Contacted</option>
-            <option value="follow_up_1"
-            {% if lead.status == "follow_up_1" %}
-                selected
-            {% endif %}>Follow Up 1</option>
-            <option value="follow_up_2"
-            {% if lead.status =="follow_up_2" %}
-                selected
-            {% endif %}>Follow Up 2</option>
-            <option value="responded"{% if lead.status == "responded"%}
-                selected
-            {% endif %}>Responded</option>
-            <option value="not_responded"{% if lead.status == "not_responded"%}
-                selected
-            {% endif %}>Not Responded</option>
-            <option value="won"{% if lead.status == "won"%}
-                selected
-            {% endif %}>Won</option>
+        <select name="status" class="status-badge status-{{ lead.status }}">
+            <option value="new" {% if lead.status == "new" %}selected{% endif %}>New</option>
+            <option value="contacted" {% if lead.status == "contacted" %}selected{% endif %}>Contacted</option>
+            <option value="follow_up_1" {% if lead.status == "follow_up_1" %}selected{% endif %}>Follow Up 1</option>
+            <option value="follow_up_2" {% if lead.status == "follow_up_2" %}selected{% endif %}>Follow Up 2</option>
+            <option value="responded" {% if lead.status == "responded" %}selected{% endif %}>Responded</option>
+            <option value="not_responded" {% if lead.status == "not_responded" %}selected{% endif %}>Not Responded</option>
+            <option value="won" {% if lead.status == "won" %}selected{% endif %}>Won</option>
         </select>
     </label>
+    <h5 style="margin-bottom: 5px">Email</h5>
     <label>
         <input name="contact" value="{{lead.contact}}" type="email" placeholder="email">
     </label>
+    <h5 style="margin-bottom: 5px">Notes</h5>
     <label>
         <textarea name="notes" placeholder="Company strugles with sales...">{{lead.notes}}</textarea>
     </label>

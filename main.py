@@ -59,8 +59,8 @@ app = FastAPI(lifespan= lifespan)
 app.mount("/static", StaticFiles(directory="static"), name = "static")
 
 @app.get("/")
-def home():
-    return templates.TemplateResponse("/")
+def home(request:Request):
+    return templates.TemplateResponse(request,"home.html")
 
 @app.get("/leads")
 def leads(request: Request):

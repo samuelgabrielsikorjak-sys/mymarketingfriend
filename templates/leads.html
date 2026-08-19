@@ -1,33 +1,43 @@
 {% extends "base.html" %}
 {% block content %}
-    <form method = "post" action ="/leads/evaluate">
-        <button type="submit">Evaluate all</button>
-    </form>
-    <table>
-        <tr>
-            <th>Name</th>
-            <th>Company</th>
-            <th>Website</th>
-            <th>Sector</th>
-            <th>Notes</th>
-            <th>Score</th>
-            <th>Actions</th>
-        </tr>   
-            {% for lead in leads %}
-            <tr>
-                <td><a href="/leads/{{lead.id}}">{{lead.name }}</a></td>
-                <td>{{lead.company}}</td>
-                <td>{{lead.web_site_url}}</td>
-                <td>{{lead.sector}}</td>
-                <td>{{lead.notes}}</td>
-                <td>{{lead.score}}</td>
-                <td><a href="/leads/{{ lead.id }}/edit">✏️</a></td>
-                <td>
-                <form method="post" action="/leads/{{ lead.id }}/delete">
-                    <button type="submit">🗑️</button>
-                </form>
-                </td>
-            </tr>
-            {% endfor %}
-    </table>
+    <div class="page-header">
+        <h1>Leads</h1>
+        <form method="post" class="ai-action" action="/leads/evaluate">
+            <button type="submit" class="btn">Evaluate all</button>
+        </form>
+    </div>
+    <div class="table-wrap">
+        <table class="leads-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Company</th>
+                    <th>Website</th>
+                    <th>Status</th>
+                    <th>Score</th>
+                    <th>Sector</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for lead in leads %}
+                <tr>
+                    <td><a class="lead-link" href="/leads/{{ lead.id }}">{{ lead.name }}</a></td>
+                    <td>{{ lead.company }}</td>
+                    <td>
+                        <a class="website-link" href="{{ lead.web_site_url if lead.web_site_url.startswith('http://') or lead.web_site_url.startswith('https://') else 'https://' + lead.web_site_url }}" target="_blank" rel="noopener noreferrer">{{ lead.web_site_url }}</a>
+                    </td>
+                    <td><span class="status-badge status-{{ lead.status }}">{{ lead.status }}</span></td>
+                    <td>{{ lead.score }}</td>
+                    <td>{{ lead.sector }}</td>
+                    <td class="actions-cell">
+                        <form method="post" action="/leads/{{ lead.id }}/delete" class="delete-form">
+                            <button type="submit" class="btn-delete" title="Delete lead" aria-label="Delete lead">🗑</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

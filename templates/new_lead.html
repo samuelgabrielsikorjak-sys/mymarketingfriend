@@ -1,20 +1,26 @@
 {% extends "base.html" %}
 {% block content %}
+<h1>Add new lead</h1>
 <form method="post" action="/leads/new">
+    <h5 style="margin-bottom: 5px">Name</h5>
     <label>
         <input name="name" placeholder="John Miller">
     </label>
+    <h5 style="margin-bottom: 5px">Company</h5>
     <label>
         <input name="company" placeholder="techscope">
     </label>
+    <h5 style="margin-bottom: 5px">Website</h5>
     <label>
         <input name="web_site_url" placeholder="www.company.com">
     </label>
+    <h5 style="margin-bottom: 5px">Sector</h5>
     <label>
         <input name="sector" placeholder="Technology">
     </label>
+    <h5 style="margin-bottom: 5px">Status</h5>
     <label>
-        <select name="status">
+        <select name="status" class="status-badge status-new">
             <option value="new" selected>New</option>
             <option value="contacted">Contacted</option>
             <option value="follow_up_1">Follow Up 1</option>
@@ -24,9 +30,11 @@
             <option value="won">Won</option>
         </select>
     </label>
+    <h5 style="margin-bottom: 5px">Email</h5>
     <label>
         <input name="contact" type="email" placeholder="email">
     </label>
+    <h5 style="margin-bottom: 5px">Notes</h5>
     <label>
         <textarea name="notes" placeholder="Company strugles with sales..."></textarea>
     </label>

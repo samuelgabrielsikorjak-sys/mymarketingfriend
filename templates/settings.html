@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
+<h1 style="margin-top= 10px">Describe your ideal customer profile</h1>
 <form method="post" action="/settings">
     <textarea name="icp_desc" rows="10" cols="50">{{ icp.icp_desc if icp else '' }}</textarea>
     <button type="submit">Uložiť ICP</button>

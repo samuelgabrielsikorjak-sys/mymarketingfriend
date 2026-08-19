@@ -1,39 +1,115 @@
 {% extends "base.html" %}
 {% block content %}
-    <form method="post" action="/leads/{{ lead.id }}/generate">
-        <button type="submit">Generate cold emails</button>
-    </form>
-    {% if script_1 %}
-<div>
-    <h3>{{ script_1.name }}</h3>
-    <textarea readonly>{{ script_1.email }}</textarea>
-    <form method="post" action="/leads/{{ lead.id }}/save_email">
-        <input type="hidden" name="chosen_name" value="{{ script_1.name }}">
-        <input type="hidden" name="chosen_email" value="{{ script_1.email }}">
-        <button type="submit">Use this one</button>
-    </form>
-</div>
+    <div class="detail-topbar">
+        <a class="back-link" href="/leads">&larr; Back to leads</a>
+        <a class="btn btn-secondary" href="/leads/{{ lead.id }}/edit">Edit lead</a>
+    </div>
 
-<div>
-    <h3>{{ script_2.name }}</h3>
-    <textarea readonly>{{ script_2.email }}</textarea>
-    <form method="post" action="/leads/{{ lead.id }}/save_email">
-        <input type="hidden" name="chosen_name" value="{{ script_2.name }}">
-        <input type="hidden" name="chosen_email" value="{{ script_2.email }}">
-        <button type="submit">Use this one</button>
-    </form>
-</div>
-{% endif %}
-                <p>{{lead.name }}</p>
-                <p>{{lead.company}}</p>
-                <p>{{lead.web_site_url}}</p>
-                <p>{{lead.sector}}</p>
-                <p>{{lead.notes}}</p>
-                <p>{{lead.score_reasoning}}</p>
-                <p>{{lead.score}}</p>
-                <p>{{lead.status}}</p>
-                <p>{{lead.contact}}</p>
-                <p>{{lead.chosen_script}}</p>
-                <p>{{lead.mail}}</p>
-                <td><a href="/leads/{{ lead.id }}/edit">Edit</a></td>
+    <div class="lead-card">
+        <div class="lead-card-header">
+            <div>
+                <h1 class="lead-name">{{ lead.name }}</h1>
+                <p class="lead-company">{{ lead.company }}</p>
+            </div>
+            <span class="status-badge status-{{ lead.status }}">{{ lead.status }}</span>
+        </div>
+
+        <div class="lead-grid">
+            <div class="lead-field">
+                <span class="field-label">Website</span>
+                <a class="website-link" href="{{ lead.web_site_url if lead.web_site_url.startswith('http://') or lead.web_site_url.startswith('https://') else 'https://' + lead.web_site_url }}" target="_blank" rel="noopener noreferrer">{{ lead.web_site_url }}</a>
+            </div>
+            <div class="lead-field">
+                <span class="field-label">Sector</span>
+                <span class="field-value">{{ lead.sector }}</span>
+            </div>
+            <div class="lead-field">
+                <span class="field-label">Contact</span>
+                <span class="field-value">{{ lead.contact }}</span>
+            </div>
+            <div class="lead-field lead-field-wide">
+                <span class="field-label">Notes</span>
+                <span class="field-value">{{ lead.notes or "—" }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="score-card">
+        <div class="score-top">
+            <div class="score-number">{{ lead.score if lead.score is not none else "—" }}<span class="score-max">/5</span></div>
+            <div class="score-dots">
+                {% for i in range(1, 6) %}
+                <span class="score-dot{% if lead.score and i <= lead.score %} filled{% endif %}"></span>
+                {% endfor %}
+            </div>
+        </div>
+        {% if lead.score_reasoning %}
+        <p class="score-reasoning">{{ lead.score_reasoning }}</p>
+        {% endif %}
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="generate-card">
+        <div class="section-heading">
+            <h2>Cold email generation</h2>
+            <form method="post" class="ai-action" action="/leads/{{ lead.id }}/generate">
+                <button type="submit" class="btn">Generate cold emails</button>
+            </form>
+        </div>
+
+        {% if script_1 %}
+        <div class="script-grid">
+            <div class="script-card">
+                <h3>{{ script_1.name }}</h3>
+                <div class="email-preview" data-email-preview>
+                    <textarea class="email-raw" hidden>{{ script_1.email }}</textarea>
+                    <div class="email-subject-block">
+                        <span class="email-subject-label">Subject</span>
+                        <p class="email-subject-text"></p>
+                    </div>
+                    <textarea class="email-body-text" readonly></textarea>
+                    <div class="copy-actions">
+                        <button type="button" class="btn-copy" data-copy="subject">Copy subject</button>
+                        <button type="button" class="btn-copy" data-copy="body">Copy body</button>
+                        <button type="button" class="btn-copy" data-copy="all">Copy all</button>
+                    </div>
+                </div>
+                <form method="post" action="/leads/{{ lead.id }}/save_email">
+                    <input type="hidden" name="chosen_name" value="{{ script_1.name }}">
+                    <input type="hidden" name="chosen_email" value="{{ script_1.email }}">
+                    <button type="submit" class="btn">Use this one</button>
+                </form>
+            </div>
+            <div class="script-card">
+                <h3>{{ script_2.name }}</h3>
+                <div class="email-preview" data-email-preview>
+                    <textarea class="email-raw" hidden>{{ script_2.email }}</textarea>
+                    <div class="email-subject-block">
+                        <span class="email-subject-label">Subject</span>
+                        <p class="email-subject-text"></p>
+                    </div>
+                    <textarea class="email-body-text" readonly></textarea>
+                    <div class="copy-actions">
+                        <button type="button" class="btn-copy" data-copy="subject">Copy subject</button>
+                        <button type="button" class="btn-copy" data-copy="body">Copy body</button>
+                        <button type="button" class="btn-copy" data-copy="all">Copy all</button>
+                    </div>
+                </div>
+                <form method="post" action="/leads/{{ lead.id }}/save_email">
+                    <input type="hidden" name="chosen_name" value="{{ script_2.name }}">
+                    <input type="hidden" name="chosen_email" value="{{ script_2.email }}">
+                    <button type="submit" class="btn">Use this one</button>
+                </form>
+            </div>
+        </div>
+        {% endif %}
+
+        {% if lead.mail %}
+        <div class="saved-email">
+            <h3>Contacted — used script: {{ lead.chosen_script }}</h3>
+            <div class="saved-email-body">{{ lead.mail }}</div>
+        </div>
+        {% endif %}
+    </div>
 {% endblock %}

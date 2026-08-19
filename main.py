@@ -1,4 +1,5 @@
 import re
+from typing import Optional
 from database import init_db, get_db
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, Form
@@ -8,6 +9,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from ai import score_lead, generate_copy
 from fastapi import HTTPException
+
 
 templates = Jinja2Templates(directory="templates")
 
@@ -115,11 +117,12 @@ def delete_lead(id: int, request: Request):
     conn.commit()
     return RedirectResponse(url="/leads", status_code = 303)
 
+
 @app.get("/settings")
-def settings(request: Request):
+def settings(request: Request, message: Optional[str] = None):
     conn = get_db()
-    icp =conn.execute("SELECT icp_desc FROM settings").fetchone()
-    return templates.TemplateResponse(request,"settings.html",{"icp": icp})
+    icp = conn.execute("SELECT icp_desc FROM settings").fetchone()
+    return templates.TemplateResponse(request, "settings.html", {"icp": icp, "message": message})
 
 @app.post("/settings")
 def get_new_icp(icp_desc: str = Form(...)):
@@ -141,6 +144,10 @@ def get_new_icp(icp_desc: str = Form(...)):
 def evaluate_all():
     conn = get_db()
     unscored = conn.execute("SELECT * FROM leads WHERE score IS NULL").fetchall()
+    icp = conn.execute("SELECT icp_desc FROM settings").fetchone()
+    if not icp or icp == "":
+        return RedirectResponse(url="/settings?message=fill_icp", status_code=303)
+    
     for lead in unscored:
         try:
             score, score_reasoning = score_lead(lead["name"], lead["company"], lead["sector"], lead["notes"])
@@ -154,6 +161,9 @@ def evaluate_all():
 def generate_mail_route(request: Request, id: int):
     conn = get_db()
     lead = conn.execute("SELECT * FROM leads WHERE id = ?",(id,)).fetchone()
+    icp = conn.execute("SELECT icp_desc FROM settings").fetchone()
+    if not icp or icp == "":
+            return RedirectResponse(url="/settings?message=fill_icp", status_code=303)
     if not lead:
             raise HTTPException(status_code=404, detail="Lead not found")
     try:

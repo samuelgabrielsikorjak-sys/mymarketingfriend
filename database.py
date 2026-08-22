@@ -1,4 +1,5 @@
-import sqlite3 
+# AI usage: Written by the author; Claude was consulted to explain SQLite connection handling and debug errors.
+import sqlite3
 
 DB = "leads.db"
 
@@ -28,7 +29,8 @@ def init_db():
     conn.execute("""
                 CREATE TABLE IF NOT EXISTS settings(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
-                    icp_desc TEXT)
+                    icp_desc TEXT,
+                    product_desc TEXT)
                     """)
     conn.commit()
     conn.close()

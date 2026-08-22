@@ -1,11 +1,20 @@
+<!-- AI usage: Initial markup prototyped by Claude per author's UI redesign prompt, then modified by the author. -->
 {% extends "base.html" %}
 {% block content %}
 {% if message == "fill_icp" %}
 <p class="alert">Please fill out your ICP before scoring or generating leads.</p>
 {% endif %}
-<h1 style="margin-top= 10px">Describe your ideal customer profile</h1>
+{% if error %}
+<p class="alert">{{ error }}</p>
+{% endif %}
+
 <form method="post" action="/settings">
+    <h1>Describe your ideal customer profile</h1>
     <textarea name="icp_desc" rows="10" cols="50">{{ icp.icp_desc if icp else '' }}</textarea>
-    <button type="submit">Uložiť ICP</button>
+
+    <h1>Describe your product/service</h1>
+    <textarea name="product_desc" rows="10" cols="50">{{ product.product_desc if product else '' }}</textarea>
+
+    <button type="submit">Save</button>
 </form>
 {% endblock %}

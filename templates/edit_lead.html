@@ -1,22 +1,26 @@
+<!-- AI usage: Initial markup prototyped by Claude per author's UI redesign prompt, then modified by the author. -->
 {% extends "base.html" %}
 {% block content %}
 <h1>Edit lead</h1>
+{% if error %}
+    <p class="alert">{{ error }}</p>
+{% endif %}
 <form method="post" action="/leads/{{ lead.id }}/edit">
     <h5 style="margin-bottom: 5px">Name</h5>
     <label>
-        <input name="name" value="{{lead.name}}" placeholder="John Miller">
+        <input name="name" value="{{lead.name or name}}" placeholder="John Miller">
     </label>
     <h5 style="margin-bottom: 5px">Company</h5>
     <label>
-        <input name="company" value="{{lead.company}}" placeholder="techscope">
+        <input name="company" value="{{company or lead.company}}" placeholder="techscope">
     </label>
     <h5 style="margin-bottom: 5px">Website</h5>
     <label>
-        <input name="web_site_url" value="{{lead.web_site_url}}" pattern="^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}.*$" type="text" placeholder="www.company.com">
+        <input name="web_site_url" value="{{web_site_url or lead.web_site_url }}" pattern="^(https?:\/\/)?(www\.)?[a-zA-Z0-9-]+\.[a-zA-Z]{2,}.*$" type="text" placeholder="www.company.com">
     </label>
     <h5 style="margin-bottom: 5px">Sector</h5>
     <label>
-        <input name="sector" value="{{lead.sector}}" placeholder="Technology">
+        <input name="sector" value="{{sector or lead.sector}}" placeholder="Technology">
     </label>
     <h5 style="margin-bottom: 5px">Status</h5>
     <label>
@@ -32,11 +36,11 @@
     </label>
     <h5 style="margin-bottom: 5px">Email</h5>
     <label>
-        <input name="contact" value="{{lead.contact}}" type="email" placeholder="email">
+        <input name="contact" value="{{contact or lead.contact}}" type="email" placeholder="email">
     </label>
     <h5 style="margin-bottom: 5px">Notes</h5>
     <label>
-        <textarea name="notes" placeholder="Company strugles with sales...">{{lead.notes}}</textarea>
+        <textarea name="notes" value= "{{notes or lead.notes}}" placeholder="Company strugles with sales...">{{lead.notes}}</textarea>
     </label>
     <button type="submit">Submit lead</button>
 </form>

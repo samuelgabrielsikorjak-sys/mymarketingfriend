@@ -1,3 +1,4 @@
+// AI usage: Most of this file was written by the author, with Claude consulted mainly to debug errors. A few sections were prototyped directly by Claude.
 const forms = document.querySelectorAll(".ai-action");
 
 forms.forEach(function(form){

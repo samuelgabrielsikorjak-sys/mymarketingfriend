@@ -1,22 +1,26 @@
+<!-- AI usage: Initial markup prototyped by Claude per author's UI redesign prompt, then modified by the author. -->
 {% extends "base.html" %}
 {% block content %}
 <h1>Add new lead</h1>
+{% if error %}
+    <p class="alert">{{ error }}</p>
+{% endif %}
 <form method="post" action="/leads/new">
     <h5 style="margin-bottom: 5px">Name</h5>
     <label>
-        <input name="name" placeholder="John Miller">
+        <input name="name" value="{{name or ''}}" placeholder="John Miller">
     </label>
     <h5 style="margin-bottom: 5px">Company</h5>
     <label>
-        <input name="company" placeholder="techscope">
+        <input name="company" value="{{company or ''}}" placeholder="techscope">
     </label>
     <h5 style="margin-bottom: 5px">Website</h5>
     <label>
-        <input name="web_site_url" placeholder="www.company.com">
+        <input name="web_site_url" value="{{web_site_url or ''}}" placeholder="www.company.com">
     </label>
     <h5 style="margin-bottom: 5px">Sector</h5>
     <label>
-        <input name="sector" placeholder="Technology">
+        <input name="sector" value="{{sector or ''}}" placeholder="Technology">
     </label>
     <h5 style="margin-bottom: 5px">Status</h5>
     <label>
@@ -32,11 +36,11 @@
     </label>
     <h5 style="margin-bottom: 5px">Email</h5>
     <label>
-        <input name="contact" type="email" placeholder="email">
+        <input name="contact" value="{{contact or ''}}" type="email" placeholder="email">
     </label>
     <h5 style="margin-bottom: 5px">Notes</h5>
     <label>
-        <textarea name="notes" placeholder="Company strugles with sales..."></textarea>
+        <textarea name="notes" placeholder="Company strugles with sales...">{{notes or ''}}</textarea>
     </label>
     <button type="submit">Submit lead</button>
 </form>

@@ -1,3 +1,4 @@
+# AI usage: Core routing/logic written by the author; Claude was consulted to explain FastAPI routing patterns and debug errors. Error handling and HTTPException 404 patterns were suggested directly by Claude and adapted by the author.
 import re
 from typing import Optional
 from database import init_db, get_db
@@ -9,6 +10,7 @@ from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from ai import score_lead, generate_copy
 from fastapi import HTTPException
+from urllib.parse import quote
 
 
 templates = Jinja2Templates(directory="templates")
@@ -71,12 +73,16 @@ def leads(request: Request):
     return templates.TemplateResponse(request, "leads.html", {"leads": leads_rows})
 
 @app.get("/leads/new")
-def new_lead_form(request: Request):
-    return templates.TemplateResponse(request, "new_lead.html", {})
+def new_lead_form(request: Request, error: Optional[str] = None, name: Optional[str] = None, company: Optional[str] = None, web_site_url: Optional[str] = None, sector: Optional[str] = None, contact: Optional[str] = None, notes: Optional[str] = None):
+    return templates.TemplateResponse(request, "new_lead.html",{"error": error, "name": name, "company": company, "web_site_url": web_site_url, "sector": sector, "contact": contact, "notes": notes})
 
 @app.post("/leads/new")
-def new_lead_save(name: str = Form(...), company: str = Form(...), web_site_url: str = Form(...), sector: str = Form(...), status: str = Form(...), contact: str = Form(...), notes: str = Form()):
-    name, company, web_site_url, sector, status, contact, notes = validate_lead_fields(name, company, web_site_url, sector, status, contact, notes)
+def new_lead_save(name: str = Form(""), company: str = Form(""), web_site_url: str = Form(""), sector: str = Form(""), status: str = Form(""), contact: str = Form(""), notes: str = Form("")):
+    try:
+        name, company, web_site_url, sector, status, contact, notes = validate_lead_fields(name, company, web_site_url, sector, status, contact, notes)
+    except HTTPException as e:
+        return RedirectResponse(url=f"/leads/new?error={quote(e.detail)}&name={quote(name)}&company={quote(company)}&web_site_url={quote(web_site_url)}&sector={quote(sector)}&contact={quote(contact)}&notes={quote(notes)}", status_code=303)
+    
     conn = get_db()
     conn.execute("INSERT INTO leads(name, company, web_site_url, sector, status, contact, notes ) VALUES (?, ?, ?, ?, ?, ?, ?)", (name, company, web_site_url, sector, status, contact, notes))
     conn.commit()
@@ -91,16 +97,27 @@ def lead_detail(id: int, request: Request):
     return templates.TemplateResponse(request, "lead_detail.html", {"lead": lead})
 
 @app.get("/leads/{id}/edit")
-def edit_lead(id: int, request: Request):
+def edit_lead(id: int, request: Request, error: Optional[str] = None, name: Optional[str] = None, company: Optional[str] = None, web_site_url: Optional[str] = None, sector: Optional[str] = None, contact: Optional[str] = None, notes: Optional[str] = None):
     conn = get_db()
     lead = conn.execute("SELECT * FROM leads WHERE id = ?",(id,)).fetchone()
     if not lead:
             raise HTTPException(status_code=404, detail="Lead not found")
-    return templates.TemplateResponse(request, "edit_lead.html",{"lead": lead})
+    return templates.TemplateResponse(request, "edit_lead.html",{
+        "lead": lead,
+        "error": error,
+        "name": name,
+        "company": company,
+        "web_site_url": web_site_url,
+        "sector": sector,
+        "contact": contact,
+        "notes": notes})
 
 @app.post("/leads/{id}/edit")
-def update_lead(id: int, name: str = Form(...), company: str = Form(...), web_site_url: str = Form(...), sector: str = Form(...), status: str = Form(...), contact: str = Form(...), notes: str = Form()):
-    name, company, web_site_url, sector, status, contact, notes = validate_lead_fields(name, company, web_site_url, sector, status, contact, notes)
+def update_lead(id: int, name: str = Form(""), company: str = Form(""), web_site_url: str = Form(""), sector: str = Form(""), status: str = Form(""), contact: str = Form(""), notes: str = Form("")):
+    try:
+        name, company, web_site_url, sector, status, contact, notes = validate_lead_fields(name, company, web_site_url, sector, status, contact, notes)
+    except HTTPException as e:
+        return RedirectResponse(url=f"/leads/{id}/edit?error={quote(e.detail)}&name={quote(name)}&company={quote(company)}&web_site_url={quote(web_site_url)}&sector={quote(sector)}&contact={quote(contact)}&notes={quote(notes)}", status_code=303)
     conn = get_db()
     rows = conn.execute("UPDATE leads SET name = ?, company = ?, web_site_url = ?, sector = ?, status = ?, contact = ?, notes = ? WHERE id = ?", (name, company, web_site_url, sector, status, contact, notes, id))
     if rows.rowcount == 0:
@@ -117,28 +134,28 @@ def delete_lead(id: int, request: Request):
     conn.commit()
     return RedirectResponse(url="/leads", status_code = 303)
 
-
 @app.get("/settings")
-def settings(request: Request, message: Optional[str] = None):
+def settings(request: Request, error: Optional[str] = None):
     conn = get_db()
-    icp = conn.execute("SELECT icp_desc FROM settings").fetchone()
-    return templates.TemplateResponse(request, "settings.html", {"icp": icp, "message": message})
+    row = conn.execute("SELECT * FROM settings").fetchone()
+    return templates.TemplateResponse(request, "settings.html", {"icp": row, "product": row, "error": error})
 
 @app.post("/settings")
-def get_new_icp(icp_desc: str = Form(...)):
+def save_settings(icp_desc: str = Form(""), product_desc: str = Form("")):
     icp_desc = icp_desc.strip()
-    if not icp_desc:
-        raise HTTPException(status_code=400, detail="ICP description is required")
-    if len(icp_desc) > MAX_NOTES_LEN:
-        raise HTTPException(status_code=400, detail="ICP description is too long")
+    product_desc = product_desc.strip()
+    if not icp_desc or icp_desc == None:
+        return RedirectResponse(url="/settings?error=ICP is required", status_code=303)
+    if not product_desc or product_desc == None:
+        return RedirectResponse(url="/settings?error=Product description is required", status_code=303)
     conn = get_db()
     existing = conn.execute("SELECT * FROM settings").fetchone()
     if not existing:
-        conn.execute("INSERT INTO settings(icp_desc) VALUES(?)",(icp_desc,))
+        conn.execute("INSERT INTO settings(icp_desc, product_desc) VALUES(?, ?)", (icp_desc, product_desc))
     else:
-        conn.execute("UPDATE settings SET icp_desc = ? WHERE id = ?", (icp_desc, existing["id"]))
+        conn.execute("UPDATE settings SET icp_desc = ?, product_desc = ? WHERE id = ?", (icp_desc, product_desc, existing["id"]))
     conn.commit()
-    return RedirectResponse(url = "/settings", status_code = 303)
+    return RedirectResponse(url="/leads/new", status_code=303)
 
 @app.post("/leads/evaluate")
 def evaluate_all():

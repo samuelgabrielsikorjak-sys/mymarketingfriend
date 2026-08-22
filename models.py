@@ -1,3 +1,4 @@
+# AI usage: Written by the author; Claude was consulted to explain Pydantic model conventions.
 from pydantic import BaseModel
 from typing import Optional
 
